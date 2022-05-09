@@ -11,9 +11,6 @@ class Keyboard {
     this.language = 'En';
     this.shift = '';
     this.getLocalStorage();
-    this.createKeyboard();
-    this.addKeyListeners();
-    this.addMouseListeners();
   }
 
   setLocalStorage() {
@@ -22,7 +19,7 @@ class Keyboard {
 
   getLocalStorage() {
     if (localStorage.getItem('virtualKeyboardLanguage') !== 'undefined') {
-      this.language = localStorage.getItem('virtualKeyboardLanguage');
+      this.language = localStorage.getItem('virtualKeyboardLanguage') || 'En';
     }
   }
 
@@ -69,7 +66,9 @@ class Keyboard {
 
   addMouseListeners() {
     this.keyField.addEventListener('mousedown', (event) => {
-      event.target.addEventListener('mouseout', (ev) => {this.unShowPressedKey(ev.target.dataset.keycode)});
+      event.target.addEventListener('mouseout', (ev) => {
+        this.unShowPressedKey(ev.target.dataset.keycode);
+      });
       if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
         this.shiftKeys();
       }
@@ -172,28 +171,27 @@ class Keyboard {
 
   changeKeys() {
     this.buttons.forEach((but) => {
-      // console.log('current button -', but.innerText);
+      /* eslint no-param-reassign: "error" */
       but.innerText = this.keys.find((e) => e.keyCode === but.dataset.keycode)[`text${this.language}${this.shift}`];
     });
   }
 
   showPressedKey(code) {
-    for (let element of this.buttons) {
-      if (element.dataset.keycode === code) {
-        element.classList.add('active');
-      }
+    const element = [...this.buttons].find((el) => el.dataset.keycode === code);
+    if (element) {
+      element.classList.add('active');
     }
   }
 
   unShowPressedKey(code) {
-    // console.log(code);
-    for (let element of this.buttons) {
-      if (element.dataset.keycode === code) {
-        element.classList.remove('active');
-      }
+    const element = [...this.buttons].find((el) => el.dataset.keycode === code);
+    if (element) {
+      element.classList.remove('active');
     }
   }
 }
 
 const keyboardApp = new Keyboard(KeyboardKeys);
-
+keyboardApp.createKeyboard();
+keyboardApp.addKeyListeners();
+keyboardApp.addMouseListeners();
