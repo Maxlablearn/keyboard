@@ -93,12 +93,16 @@ const KeyboardKeys = [
   {
     keyCode: 'Backspace',
     textEn: 'Backspace',
-    textBy: 'Backspace'
+    textEnShift: 'Backspace',
+    textBy: 'Backspace',
+    textByShift: 'Backspace'
   },
   {
     keyCode: 'Tab',
     textEn: 'Tab',
-    textBy: 'Tab'
+    textEnShift: 'Tab',
+    textBy: 'Tab',
+    textByShift: 'Tab'
   },
   {
     keyCode: 'KeyQ',
@@ -193,7 +197,10 @@ const KeyboardKeys = [
   },
   {
     keyCode: 'CapsLock',
-    textEn: 'CapsLock'
+    textEn: 'CapsLock',
+    textEnShift: 'CapsLock',
+    textBy: 'CapsLock',
+    textByShift: 'CapsLock'
   },
   {
     keyCode: 'KeyA',
@@ -275,7 +282,9 @@ const KeyboardKeys = [
   {
     keyCode: 'Enter',
     textEn: 'Enter',
-    textBy: 'Enter'
+    textEnShift: 'Enter',
+    textBy: 'Enter',
+    textByShift: 'Enter'
   },
   {
     keyCode: 'ShiftLeft',
@@ -356,58 +365,80 @@ const KeyboardKeys = [
   },
   {
     keyCode: 'ArrowUp',
-    textEn: 'ArrowUp',
-    textBy: 'ArrowUp'
+    textEn: '↑',
+    textEnShift: '↑',
+    textBy: '↑',
+    textByShift: '↑'
   },
   {
     keyCode: 'ShiftRight',
     textEn: 'Shift',
-    textBy: 'Shift'
+    textEnShift: 'Shift',
+    textBy: 'Shift',
+    textByShift: 'Shift'
   },
   {
     keyCode: 'ControlLeft',
     textEn: 'Ctrl',
-    textBy: 'Ctrl'
+    textEnShift: 'Ctrl',
+    textBy: 'Ctrl',
+    textByShift: 'Ctrl'
   },
   {
     keyCode: 'MetaLeft',
-    textEn: 'Meta',
-    textBy: 'Meta'
+    textEn: '',
+    textEnShift: '',
+    textBy: '',
+    textByShift: ''
   },
   {
     keyCode: 'AltLeft',
     textEn: 'Alt',
-    textBy: 'Alt'
+    textEnShift: 'Alt',
+    textBy: 'Alt',
+    textByShift: 'Alt'
   },
   {
     keyCode: 'Space',
     textEn: ' ',
-    textBy: ' '
+    textEnShift: ' ',
+    textBy: ' ',
+    textByShift: ' '
   },
   {
     keyCode: 'AltRight',
     textEn: 'Alt',
-    textBy: 'Alt'
+    textEnShift: 'Alt',
+    textBy: 'Alt',
+    textByShift: 'Alt'
   },
   {
     keyCode: 'ControlRight',
     textEn: 'Ctrl',
-    textBy: 'Ctrl'
+    textEnShift: 'Ctrl',
+    textBy: 'Ctrl',
+    textByShift: 'Ctrl'
   },
   {
     keyCode: 'ArrowLeft',
-    textEn: 'ArrowLeft',
-    textBy: 'ArrowLeft'
+    textEn: '←',
+    textEnShift: '←',
+    textBy: '←',
+    textByShift: '←'
   },
   {
     keyCode: 'ArrowDown',
-    textEn: 'ArrowDown',
-    textBy: 'ArrowDown'
+    textEn: '↓',
+    textEnShift: '↓',
+    textBy: '↓',
+    textByShift: '↓'
   },
   {
     keyCode: 'ArrowRight',
-    textEn: 'ArrowRight',
-    textBy: 'ArrowRight'
+    textEn: '→',
+    textEnShift: '→',
+    textBy: '→',
+    textByShift: '→'
   }
 ];
 

@@ -1,34 +1,191 @@
 import { KeyboardKeys } from './src/key-array.js';
-console.log('all work well');
-console.log(KeyboardKeys);
-
-//const keys = [{textEn:'q', textEnShift: 'Q', textBy:'й', textByShift:'Й', keyCode:'KeyQ',
-// color: 'red', bgColor: 'gray', cssStyle: '.button', gridFraction: 2}];
 
 class Keyboard {
   constructor(keys) {
     this.keys = keys;
+    this.keyField = [];
+    this.buttons = [];
+    this.doc = [];
+    this.textArea = [];
+    this.textPosition = 0;
+    this.language = 'En';
+    this.shift = '';
+    this.createKeyboard();
+    this.addKeyListeners();
+    this.addMouseListeners();
+  }
+
+  createKeyboard() {
     document.querySelector('body').insertAdjacentHTML('afterbegin', '<div class="container"></div>');
     this.keyboard = document.querySelector('.container');
-    this.keyboard.insertAdjacentHTML('beforeend', '<h1> Look, it\'s KEYBOARD</h1>');
-    this.keyboard.insertAdjacentHTML('beforeend', '<textarea class="textarea" rows="5" cols="50"></textarea>');
-    this.textArea = document.querySelector('.textarea');
+    this.keyboard.insertAdjacentHTML('beforeend', '<h1> Look, it\'s a KEYBOARD</h1>');
+    this.keyboard.insertAdjacentHTML('beforeend', '<textarea id="textarea" autofocus="true" class="textarea" rows="5" cols="50"></textarea>');
+    this.textArea = document.querySelector('#textarea');
     this.keyboard.insertAdjacentHTML('beforeend', '<div class="key-field"></div>');
+    this.keyboard.insertAdjacentHTML('beforeend', '<div class="description">For change language press Ctrl + Shift</div>');
     this.keyField = document.querySelector('.key-field');
-    // this.keyField.insertAdjacentHTML('beforeend', '<div class="row"></div>');
-    keys.forEach(k => {
+    this.keys.forEach(k => {
       if (k.keyCode === 'Backquote' || k.keyCode === 'Tab' || k.keyCode === 'CapsLock' || k.keyCode === 'ShiftLeft' || k.keyCode === 'ControlLeft') {
         this.keyField.insertAdjacentHTML('beforeend', '<div class="row"></div>');
         this.row = document.querySelector('.row:last-child');
-        console.log('this.row - ', this.row);
+        // console.log('this.row - ', this.row);
       }
       this.row.insertAdjacentHTML('beforeend', `<div class="key" data-keyCode="${k.keyCode}">${k.textEn}</div>`);
     });
-    console.log(this.textArea);
-  
+    this.buttons = document.querySelectorAll('.key');
   }
-  createKeyboard () {
+
+  addKeyListeners() {
+    this.doc = document.querySelector('body');
+    this.doc.addEventListener('keydown', (event) => {
+      this.showPressedKey(event.code);
+      if (event.key === 'Shift') {
+        this.shiftKeys();
+      }
+      event.preventDefault();
+    });
+    this.doc.addEventListener('keyup', (event) => {
+      console.log(event);
+      if (event.key === 'Shift') {
+        this.unShiftKeys();
+        if (event.ctrlKey) {
+          this.changeLanguage();
+        }
+      }
+      this.unShowPressedKey(event.code);
+      this.writeSymbol(this.keys.find((e) => e.keyCode === event.code)[`text${this.language}${this.shift}`]);
+      event.preventDefault();
+    });
   }
+
+  addMouseListeners() {
+    this.keyField.addEventListener('mousedown', (event) => {
+      console.log('down -', event.target.dataset.keycode);
+      if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
+        this.shiftKeys();
+      } 
+      this.showPressedKey(event.target.dataset.keycode);
+      event.preventDefault();
+    });
+    this.keyField.addEventListener('mouseup', (event) => {
+      // console.log('up -', event);
+      // srcEpreviousElementSibling
+      if (event.target.classList.contains('key')) {
+        if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
+          this.unShiftKeys();
+        } 
+        this.unShowPressedKey(event.target.dataset.keycode);
+        this.writeSymbol(event.target.textContent);
+      }
+    });
+  }
+
+  writeSymbol(keyCode) {
+    let position = this.textArea.selectionStart;
+    let text = this.textArea.value;
+    this.textArea.focus();
+    let sumb;
+    switch (keyCode) {
+      case 'Backspace':
+        this.backspace();
+        return;
+      case 'Enter':
+        sumb = '\n';
+        break;
+      case 'Tab':
+        sumb = '\t';
+        break;
+      case 'CapsLock':
+        sumb = '';
+        this.capsLock();
+        break;
+      case 'Shift':
+        sumb = '';
+        break;
+      case 'Ctrl':
+        sumb = '';
+        break;
+      case 'MetaLeft':
+        sumb = '';
+        break;
+      case 'Alt':
+        sumb = '';
+        break;
+      default:
+        sumb = keyCode;
+    }
+    this.textArea.value = text.slice(0, position) + sumb + text.slice(position);
+    this.textArea.selectionStart = position + 1;
+    this.textArea.selectionEnd = position + 1;
+  }
+
+  capsLock() {
+    if (this.shift === '') {
+      this.shift = 'Shift';
+      document.querySelector('.key[data-keycode=CapsLock]').classList.add('active');
+    } else {
+      this.shift = '';
+      document.querySelector('.key[data-keycode=CapsLock]').classList.remove('active');
+    }
+    this.changeKeys();
+  }
+
+  backspace() {
+    let position = this.textArea.selectionStart;
+    if (position === 0) {
+      return;
+    }
+    let text = this.textArea.value;
+    this.textArea.value = text.slice(0, position - 1) + text.slice(position);
+    this.textArea.selectionStart = position - 1;
+    this.textArea.selectionEnd = position - 1;
+  }
+
+  shiftKeys() {
+    this.shift = 'Shift';
+    this.changeKeys();
+  }
+
+  unShiftKeys() {
+    this.shift = '';
+    this.changeKeys();
+  }
+
+  changeLanguage() {
+    if (this.language === 'En') {
+      this.language = 'By';
+    } else {
+      this.language = 'En';
+    }
+    this.changeKeys();
+  }
+
+  changeKeys() {
+    this.buttons.forEach((but) => {
+      // console.log('current button -', but.innerText);
+      but.innerText = this.keys.find((e) => e.keyCode === but.dataset.keycode)[`text${this.language}${this.shift}`];
+    });
+  }
+
+  showPressedKey(code) {
+    for (let element of this.buttons) {
+      if (element.dataset.keycode === code) {
+        element.classList.add('active');
+      }
+    }
+  }
+
+  unShowPressedKey(code) {
+    // console.log(code);
+    for (let element of this.buttons) {
+      if (element.dataset.keycode === code) {
+        element.classList.remove('active');
+      }
+    }
+  }
+
+
 }
 
 const keyboardApp = new Keyboard(KeyboardKeys);
+

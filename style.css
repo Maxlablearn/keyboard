@@ -34,10 +34,12 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .textarea {
   font-size: 2vw;
+  width: 99%;
 }
 
 .key-field {
@@ -48,11 +50,14 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 100%;
+  width: 97.5%;
   row-gap: 1vw;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin-top: 50px;
+  border: 1px black solid;
+  padding: 1vw;
+  border-radius: 10px;
 }
 
 .row {
@@ -71,9 +76,30 @@ body {
           justify-content: space-between;
 }
 
+.key[data-keycode=MetaLeft] {
+  background: no-repeat center url("./src/images/windows.svg") burlywood;
+  background-size: 25%;
+}
+
+.key[data-keycode=ArrowUp],
+.key[data-keycode=ArrowDown] {
+  background: no-repeat center url("./src/images/up-arrow.svg") burlywood;
+}
+
+.key[data-keycode=ArrowLeft],
+.key[data-keycode=ArrowRight] {
+  background: no-repeat center url("./src/images/left-arrow.svg");
+  background-color: burlywood;
+}
+
+.key[data-keycode^=Arrow] {
+  background-size: 25%;
+  color: transparent;
+}
+
 .key {
   width: 5.8%;
-  min-height: 50px;
+  height: 5.8vw;
   background-color: burlywood;
   border: 1px solid black;
   border-radius: 5px;
@@ -93,6 +119,14 @@ body {
 .key:hover {
   -webkit-box-shadow: 0 0 10px gray;
           box-shadow: 0 0 10px gray;
+}
+
+.key.active {
+  background-color: yellow;
+  -webkit-box-shadow: 0 0 10px gray inset;
+          box-shadow: 0 0 10px gray inset;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 .key[data-keycode=Backspace],
@@ -126,5 +160,15 @@ body {
 .key[data-keycode=Space] {
   width: 35%;
   font-size: 1.5vw;
+}
+
+.key[data-keycode^=Alt] {
+  font-size: 1.5vw;
+}
+
+.key[data-keycode=ArrowRight],
+.key[data-keycode=ArrowDown] {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 /*# sourceMappingURL=style.css.map */

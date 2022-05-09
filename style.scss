@@ -30,19 +30,24 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 .textarea {
     font-size: 2vw;
+    width: 99%;
 }
 
 .key-field {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 97.5%;
     row-gap: 1vw;
     flex-wrap: wrap;
     margin-top: 50px;
+    border: 1px black solid;
+    padding: 1vw;
+    border-radius: 10px;
 }
 
 .row {
@@ -53,9 +58,30 @@ body {
     justify-content: space-between;
 }
 
+.key[data-keycode=MetaLeft] {
+    background: no-repeat center url("./src/images/windows.svg") burlywood;
+    background-size: 25%;
+}
+
+.key[data-keycode=ArrowUp],
+.key[data-keycode=ArrowDown] {
+    background: no-repeat center url("./src/images/up-arrow.svg") burlywood;
+}
+
+.key[data-keycode=ArrowLeft],
+.key[data-keycode=ArrowRight] {
+    background: no-repeat center url("./src/images/left-arrow.svg");
+    background-color:  burlywood;
+}
+
+.key[data-keycode^=Arrow] {
+    background-size: 25%;
+    color: transparent;
+}
+
 .key {
     width: 5.8%;
-    min-height: 50px;
+    height: 5.8vw;
     background-color: burlywood;
     border: 1px solid black;
     border-radius: 5px;
@@ -66,6 +92,11 @@ body {
     font-size: 2vw;
     &:hover {
         box-shadow: 0 0 10px gray;
+    }
+    &.active {
+        background-color: yellow;
+        box-shadow: 0 0 10px gray inset;
+        transform: scale(1.1);
     }
 }
 
@@ -101,4 +132,15 @@ body {
 .key[data-keycode=Space] {
     width: 35%;
     font-size: 1.5vw;
+}
+
+
+
+.key[data-keycode^=Alt] {
+    font-size: 1.5vw;
+}
+
+.key[data-keycode=ArrowRight],
+.key[data-keycode=ArrowDown] {
+    transform: rotate(180deg);
 }
