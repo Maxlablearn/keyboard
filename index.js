@@ -10,9 +10,22 @@ class Keyboard {
     this.textPosition = 0;
     this.language = 'En';
     this.shift = '';
+    // console.log('before -', this.language);
+    this.getLocalStorage();
+    // console.log('after -', this.language);
     this.createKeyboard();
     this.addKeyListeners();
     this.addMouseListeners();
+  }
+
+  setLocalStorage() {
+    localStorage.setItem('virtualKeyboardLanguage', this.language);
+  }
+
+  getLocalStorage() {
+    if (localStorage.getItem('virtualKeyboardLanguage') !== 'undefined') {
+      this.language = localStorage.getItem('virtualKeyboardLanguage');
+    }
   }
 
   createKeyboard() {
@@ -28,9 +41,8 @@ class Keyboard {
       if (k.keyCode === 'Backquote' || k.keyCode === 'Tab' || k.keyCode === 'CapsLock' || k.keyCode === 'ShiftLeft' || k.keyCode === 'ControlLeft') {
         this.keyField.insertAdjacentHTML('beforeend', '<div class="row"></div>');
         this.row = document.querySelector('.row:last-child');
-        // console.log('this.row - ', this.row);
       }
-      this.row.insertAdjacentHTML('beforeend', `<div class="key" data-keyCode="${k.keyCode}">${k.textEn}</div>`);
+      this.row.insertAdjacentHTML('beforeend', `<div class="key" data-keyCode="${k.keyCode}">${k[`text${this.language}`]}</div>`);
     });
     this.buttons = document.querySelectorAll('.key');
   }
@@ -67,8 +79,6 @@ class Keyboard {
       event.preventDefault();
     });
     this.keyField.addEventListener('mouseup', (event) => {
-      // console.log('up -', event);
-      // srcEpreviousElementSibling
       if (event.target.classList.contains('key')) {
         if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
           this.unShiftKeys();
@@ -157,6 +167,7 @@ class Keyboard {
       this.language = 'En';
     }
     this.changeKeys();
+    this.setLocalStorage();
   }
 
   changeKeys() {
@@ -185,3 +196,4 @@ class Keyboard {
 }
 
 const keyboardApp = new Keyboard(KeyboardKeys);
+
