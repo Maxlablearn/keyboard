@@ -45,12 +45,11 @@ class Keyboard {
       event.preventDefault();
     });
     this.doc.addEventListener('keyup', (event) => {
-      console.log(event);
       if (event.key === 'Shift') {
         this.unShiftKeys();
-        if (event.ctrlKey) {
-          this.changeLanguage();
-        }
+      }
+      if ((event.key === 'Shift' && event.ctrlKey)) {
+        this.changeLanguage();
       }
       this.unShowPressedKey(event.code);
       this.writeSymbol(this.keys.find((e) => e.keyCode === event.code)[`text${this.language}${this.shift}`]);
@@ -63,7 +62,7 @@ class Keyboard {
       console.log('down -', event.target.dataset.keycode);
       if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
         this.shiftKeys();
-      } 
+      }
       this.showPressedKey(event.target.dataset.keycode);
       event.preventDefault();
     });
@@ -73,7 +72,7 @@ class Keyboard {
       if (event.target.classList.contains('key')) {
         if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
           this.unShiftKeys();
-        } 
+        }
         this.unShowPressedKey(event.target.dataset.keycode);
         this.writeSymbol(event.target.textContent);
       }
@@ -183,9 +182,6 @@ class Keyboard {
       }
     }
   }
-
-
 }
 
 const keyboardApp = new Keyboard(KeyboardKeys);
-
