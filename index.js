@@ -10,9 +10,7 @@ class Keyboard {
     this.textPosition = 0;
     this.language = 'En';
     this.shift = '';
-    // console.log('before -', this.language);
     this.getLocalStorage();
-    // console.log('after -', this.language);
     this.createKeyboard();
     this.addKeyListeners();
     this.addMouseListeners();
@@ -31,8 +29,8 @@ class Keyboard {
   createKeyboard() {
     document.querySelector('body').insertAdjacentHTML('afterbegin', '<div class="container"></div>');
     this.keyboard = document.querySelector('.container');
-    this.keyboard.insertAdjacentHTML('beforeend', '<h1> Look, it\'s a KEYBOARD</h1>');
-    this.keyboard.insertAdjacentHTML('beforeend', '<textarea id="textarea" autofocus="true" class="textarea" rows="5" cols="50"></textarea>');
+    this.keyboard.insertAdjacentHTML('beforeend', '<h1>KEYBOARD</h1>');
+    this.keyboard.insertAdjacentHTML('beforeend', '<textarea id="textarea" autofocus="true" class="textarea" rows="5"></textarea>');
     this.textArea = document.querySelector('#textarea');
     this.keyboard.insertAdjacentHTML('beforeend', '<div class="key-field"></div>');
     this.keyboard.insertAdjacentHTML('beforeend', '<div class="description">For change language press Ctrl + Shift</div>');
@@ -71,11 +69,14 @@ class Keyboard {
 
   addMouseListeners() {
     this.keyField.addEventListener('mousedown', (event) => {
-      console.log('down -', event.target.dataset.keycode);
+      event.target.addEventListener('mouseout', (ev) => {this.unShowPressedKey(ev.target.dataset.keycode)});
       if (event.target.dataset.keycode === 'ShiftLeft' || event.target.dataset.keycode === 'ShiftRight') {
         this.shiftKeys();
       }
       this.showPressedKey(event.target.dataset.keycode);
+      if (event.target.classList.contains('key')) {
+        this.writeSymbol(event.target.textContent);
+      }
       event.preventDefault();
     });
     this.keyField.addEventListener('mouseup', (event) => {
@@ -84,7 +85,6 @@ class Keyboard {
           this.unShiftKeys();
         }
         this.unShowPressedKey(event.target.dataset.keycode);
-        this.writeSymbol(event.target.textContent);
       }
     });
   }

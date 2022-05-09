@@ -18,10 +18,12 @@
 
 h1 {
   color: red;
+  margin: 1vw 0 0 0;
 }
 
 body {
   font-family: Roboto;
+  font-size: 3vw;
 }
 
 .container {
@@ -33,6 +35,9 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -40,6 +45,7 @@ body {
 .textarea {
   font-size: 2vw;
   width: 99%;
+  margin-top: 1vw;
 }
 
 .key-field {
@@ -54,10 +60,11 @@ body {
   row-gap: 1vw;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-top: 50px;
+  margin-top: 1vw;
   border: 1px black solid;
   padding: 1vw;
   border-radius: 10px;
+  background-color: beige;
 }
 
 .row {
@@ -74,6 +81,66 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+@-webkit-keyframes button-on {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+
+@keyframes button-on {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  40% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+}
+
+@-webkit-keyframes button-off {
+  from {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  40% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes button-off {
+  from {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  40% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 
 .key[data-keycode=MetaLeft] {
@@ -99,7 +166,7 @@ body {
 
 .key {
   width: 5.8%;
-  height: 5.8vw;
+  height: 4.8vw;
   background-color: burlywood;
   border: 1px solid black;
   border-radius: 5px;
@@ -114,19 +181,25 @@ body {
       -ms-flex-align: center;
           align-items: center;
   font-size: 2vw;
+  -webkit-transition: 1000ms;
+  transition: 1000ms;
+  -webkit-animation: button-off 300ms ease-in;
+          animation: button-off 300ms ease-in;
 }
 
 .key:hover {
   -webkit-box-shadow: 0 0 10px gray;
           box-shadow: 0 0 10px gray;
+  -webkit-transition: 300ms;
+  transition: 300ms;
 }
 
 .key.active {
+  -webkit-animation: button-on 300ms ease-in;
+          animation: button-on 300ms ease-in;
   background-color: yellow;
-  -webkit-box-shadow: 0 0 10px gray inset;
-          box-shadow: 0 0 10px gray inset;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
 }
 
 .key[data-keycode=Backspace],
@@ -170,5 +243,9 @@ body {
 .key[data-keycode=ArrowDown] {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
+}
+
+.description {
+  margin-top: 1vw;
 }
 /*# sourceMappingURL=style.css.map */
